@@ -19,6 +19,14 @@ class Api {
         return Api._post('/helper/configuration', configuration);
     }
 
+    static getLogs() {
+        return Api._get('/helper/logs');
+    }
+
+    static clearLogs() {
+        return Api._delete('/helper/logs');
+    }
+
     static _get(path) {
         return new Promise((resolve, reject) => {
             axios.get(Api.URL + path).then((response) => {
@@ -30,6 +38,14 @@ class Api {
     static _post(path, data) {
         return new Promise((resolve, reject) => {
             axios.post(Api.URL + path, data).then((response) => {
+                resolve(response.data)
+            }).catch(reject)
+        });
+    }
+
+    static _delete(path) {
+        return new Promise((resolve, reject) => {
+            axios.delete(Api.URL + path).then((response) => {
                 resolve(response.data)
             }).catch(reject)
         });

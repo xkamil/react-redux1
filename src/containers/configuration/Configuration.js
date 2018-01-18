@@ -25,9 +25,9 @@ class Configuration extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let newConfiguration = nextProps.configuration.configuration;
-        if (!areEqual(this.state.configuration, newConfiguration)) {
-            this.setState({...this.state, changed: false, configuration: {...newConfiguration}})
+        let configuration = nextProps.configuration.configuration;
+        if (!areEqual(this.state.configuration, configuration)) {
+            this.setState({...this.state, changed: false, configuration})
         } else if (this.state.changed) {
             this.setState({...this.state, changed: false})
         }
@@ -36,7 +36,7 @@ class Configuration extends Component {
     handleChange(e) {
         let id = e.target.getAttribute('id');
         let type = e.target.type;
-        let value = type === 'number' ? parseInt(e.target.value) : e.target.value;
+        let value = type === 'number' ? parseInt(e.target.value, 10) : e.target.value;
         let configuration = {...this.state.configuration, [id]: value};
         let changed = !areEqual(configuration, this.props.configuration.configuration);
 

@@ -6,43 +6,32 @@ class ConfigurationForm extends Component {
     render() {
         const {configuration, changed, handleChange, handleSave, handleCancel, handleResetToDefault} = this.props;
 
+        const createTextInput = (type, id) => (
+            <input
+                type={type}
+                className="form-control"
+                id={id}
+                value={configuration[id]}
+                onChange={handleChange}/>
+        );
+
         return (
             <form>
                 <div className="form-group">
-                    <label htmlFor="access_token_expiration_time">Access token expiration time:</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        id="access_token_expiration_time"
-                        value={configuration.access_token_expiration_time}
-                        onChange={handleChange}/>
+                    <strong><label htmlFor="access_token_expiration_time">Access token expiration time:</label></strong>
+                    {createTextInput('number', 'access_token_expiration_time')}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="refresh_token_expiration_time">Refresh token expiration time:</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        id="refresh_token_expiration_time"
-                        value={configuration.refresh_token_expiration_time}
-                        onChange={handleChange}/>
+                    <strong><label htmlFor="refresh_token_expiration_time">Refresh token expiration time:</label></strong>
+                    {createTextInput('number', 'refresh_token_expiration_time')}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="client_id">Client ID:</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="client_id"
-                        value={configuration.client_id}
-                        onChange={handleChange}/>
+                    <strong><label htmlFor="client_id">Client ID:</label></strong>
+                    {createTextInput('text', 'client_id')}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="client_secret">Client secret:</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="client_secret"
-                        value={configuration.client_secret}
-                        onChange={handleChange}/>
+                    <strong><label htmlFor="client_secret">Client secret:</label></strong>
+                    {createTextInput('text', 'client_secret')}
                 </div>
                 <div className="btn-group">
                     {changed && <span className="btn btn-success" onClick={handleSave}>Save</span>}
