@@ -11,10 +11,12 @@ class Users extends Component {
     render() {
         const {users} = this.props;
 
+        console.log(this.props);
+
         return (
             <div>
                 <h1>List of users</h1>
-                {JSON.stringify(users,null,3)}
+                {JSON.stringify(users.list,null,3)}
                 <hr/>
             </div>
         );
@@ -22,14 +24,12 @@ class Users extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log('state:');
-    console.log(state);
     return {users: state.users}
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchUsers: () => fetchUsers(dispatch)
+        fetchUsers: () => dispatch(fetchUsers())
     }
 };
 

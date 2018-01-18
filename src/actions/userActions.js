@@ -1,18 +1,19 @@
-import Api from "../Api";
+export const UPDATE_USERS = 'FETCH_USERS';
 
-export const FETCH_USERS = 'FETCH_USERS';
 
-export function fetchUsers(dispatch) {
-    Api.get('/users').then((users) => {
-        dispatch({
-            type: FETCH_USERS,
-            users,
-            error: null
-        })
-    }).catch((error) => {
-        dispatch({
-            type: FETCH_USERS,
-            error
-        })
-    })
-}
+export const updateUsers = (users, error) => (
+    {
+        type: UPDATE_USERS,
+        users,
+        error: error
+    }
+);
+
+export const fetchUsers = () => {
+    return (dispatch, getState, api) => {
+        return api.getUsers().then(
+            users => dispatch(updateUsers(users)),
+            error => dispatch(updateUsers(null, error)),
+        );
+    }
+};

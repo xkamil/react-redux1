@@ -3,7 +3,23 @@ import axios from 'axios'
 class Api {
     static URL = 'http://127.0.0.1:3000';
 
-    static get(path) {
+    static getUsers() {
+        return Api._get('/helper/users');
+    }
+
+    static getConfiguration() {
+        return Api._get('/helper/configuration');
+    }
+
+    static resetConfiguration() {
+        return Api._get('/helper/resetConfiguration');
+    }
+
+    static saveConfiguration(configuration) {
+        return Api._post('/helper/configuration', configuration);
+    }
+
+    static _get(path) {
         return new Promise((resolve, reject) => {
             axios.get(Api.URL + path).then((response) => {
                 resolve(response.data)
@@ -11,7 +27,7 @@ class Api {
         });
     }
 
-    static post(path, data) {
+    static _post(path, data) {
         return new Promise((resolve, reject) => {
             axios.post(Api.URL + path, data).then((response) => {
                 resolve(response.data)
