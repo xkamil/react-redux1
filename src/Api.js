@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 class Api {
-    static URL = 'http://127.0.0.1:3000';
+    static URL = 'https://oauth2testserver.herokuapp.com';
 
     static getUsers() {
         return Api._get('/helper/users');
