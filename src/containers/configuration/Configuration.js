@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {fetchConfiguration, resetConfiguration, saveConfiguration} from "../../actions/configurationActions";
 import {areEqual} from "../../utils/comparators";
+import ConfigurationForm from "./ConfigurationForm";
 
 class Configuration extends Component {
 
@@ -17,11 +18,6 @@ class Configuration extends Component {
                 client_secret: ''
             }
         };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-        this.handleResetToDefault = this.handleResetToDefault.bind(this);
-        this.handleSave = this.handleSave.bind(this);
     }
 
     componentDidMount() {
@@ -32,7 +28,7 @@ class Configuration extends Component {
         let newConfiguration = nextProps.configuration.configuration;
         if (!areEqual(this.state.configuration, newConfiguration)) {
             this.setState({...this.state, changed: false, configuration: {...newConfiguration}})
-        }else if(this.state.changed){
+        } else if (this.state.changed) {
             this.setState({...this.state, changed: false})
         }
     }
@@ -60,60 +56,19 @@ class Configuration extends Component {
     }
 
     render() {
-        const {configuration} = this.props.configuration;
-
         return (
             <div>
                 <h1>Configuration</h1>
                 <hr/>
-                <pre>
-                    {JSON.stringify(configuration, null, 3)}
-                </pre>
 
-                <form>
-                    <div className="form-group">
-                        <label htmlFor="access_token_expiration_time">Access token expiration time:</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="access_token_expiration_time"
-                            value={this.state.configuration.access_token_expiration_time}
-                            onChange={this.handleChange}/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="refresh_token_expiration_time">Refresh token expiration time:</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="refresh_token_expiration_time"
-                            value={this.state.configuration.refresh_token_expiration_time}
-                            onChange={this.handleChange}/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="client_id">Client ID:</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="client_id"
-                            value={this.state.configuration.client_id}
-                            onChange={this.handleChange}/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="client_secret">Client secret:</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="client_secret"
-                            value={this.state.configuration.client_secret}
-                            onChange={this.handleChange}/>
-                    </div>
-                    <div className="btn-group">
-                        {this.state.changed && <span className="btn btn-success" onClick={this.handleSave}>Save</span>}
-                        {this.state.changed &&
-                        <span className="btn btn-danger" onClick={this.handleCancel}>Cancel</span>}
-                        <span className="btn btn-primary" onClick={this.handleResetToDefault}>Reset to default</span>
-                    </div>
-                </form>
+                <ConfigurationForm
+                    configuration={this.state.configuration}
+                    changed={this.state.changed}
+                    handleChange={this.handleChange.bind(this)}
+                    handleSave={this.handleSave.bind(this)}
+                    handleCancel={this.handleCancel.bind(this)}
+                    handleResetToDefault={this.handleResetToDefault.bind(this)}
+                />
                 <hr/>
             </div>
         );
