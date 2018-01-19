@@ -22,7 +22,9 @@ class SmartTable extends Component {
         this.state = {
             data: [],
             headers: [],
-            filters: {}
+            filters: {},
+            order: -1,
+            orderBy: 'time'
         };
     }
 
@@ -104,12 +106,41 @@ class SmartTable extends Component {
         this.setState({...this.state, filters: {...this.state.filters, [id]: value}})
     }
 
+    changeOrder(field) {
+        this.setState({...this.state, orderBy: field, order: this.state.order * -1});
+    }
+
+    sort(data) {
+        let dataCopy = JSON.parse(JSON.stringify(data));
+
+        let idx = this.state.headers.indexOf(this.state.orderBy);
+
+        if(idx !== -1){
+            dataCopy.sort((a, b) => {
+                if (a[idx] < b[idx]) {
+                    return -1 * this.state.order;
+                } else if (b[idx] < a[idx]) {
+                    return 1 * this.state.order;
+                }
+                return 0;
+            });
+        }
+
+        return dataCopy;
+    }
+
     render() {
         const {headers} = this.state;
         const filteredData = this.filterData();
 
+        console.log(filteredData);
+        
+        const testData = this.sort(filteredData);
+
+        console.log(testData);
         const filterInput = (id) => <input
             type="text"
+            style={{width: '100%', height: 25}}
             id={id} value={this.state.filters[id] || ''}
             onChange={this.handleFilerChange.bind(this)}/>;
 
@@ -117,10 +148,9 @@ class SmartTable extends Component {
             <table className="table">
                 <thead className="thead-dark">
                 <tr>
-                    {headers.map((header, idx) => <th key={idx}>{header}</th>)}
+                    {headers.map((header, idx) => <th key={idx} onClick={this.changeOrder.bind(this, header)}>{header}</th>)}
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr>
                     {headers.map((header, idx) => <td key={idx}>{filterInput(header)}</td>)}
