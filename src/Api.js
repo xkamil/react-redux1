@@ -1,10 +1,14 @@
 import axios from 'axios'
 
 class Api {
-    static URL = 'https://oauth2testserver.herokuapp.com';
+    //static URL = 'https://oauth2testserver.herokuapp.com';
+    static URL = 'http://10.20.34.134:3001';
 
     static getUsers() {
-        return Api._get('/helper/users');
+        return Api._get('/helper/users').then((users) => {
+            users = users || {};
+            return Object.getOwnPropertyNames(users).map(id => ({id, ...users[id]}));
+        })
     }
 
     static getConfiguration() {

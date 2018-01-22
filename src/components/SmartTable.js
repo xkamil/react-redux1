@@ -14,6 +14,7 @@ import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import CollapsableContent from "./CollapsableContent";
 import {areEqualDeep} from "../utils/comparators";
+import {formatCamelCased, formatUnderscored} from "../utils/formatters";
 
 class SmartTable extends Component {
     constructor(props) {
@@ -74,7 +75,7 @@ class SmartTable extends Component {
     transform(obj) {
         if (typeof obj === 'object') {
             return <CollapsableContent>
-                <pre>{JSON.stringify(obj, null, 2).replace(/({)|(})|(")|(,)/g, '')}</pre>
+                <pre>{JSON.stringify(obj, null, 2)}</pre>
             </CollapsableContent>;
         } else {
             return obj;
@@ -107,6 +108,7 @@ class SmartTable extends Component {
     }
 
     changeOrder(field) {
+        console.log(this.state);
         this.setState({...this.state, orderBy: field, order: this.state.order * -1});
     }
 
@@ -115,7 +117,7 @@ class SmartTable extends Component {
 
         let idx = this.state.headers.indexOf(this.state.orderBy);
 
-        if(idx !== -1){
+        if (idx !== -1) {
             dataCopy.sort((a, b) => {
                 if (a[idx] < b[idx]) {
                     return -1 * this.state.order;
@@ -133,11 +135,8 @@ class SmartTable extends Component {
         const {headers} = this.state;
         const filteredData = this.filterData();
 
-        console.log(filteredData);
-        
         const testData = this.sort(filteredData);
 
-        console.log(testData);
         const filterInput = (id) => <input
             type="text"
             style={{width: '100%', height: 25}}
@@ -148,7 +147,8 @@ class SmartTable extends Component {
             <table className="table">
                 <thead className="thead-dark">
                 <tr>
-                    {headers.map((header, idx) => <th key={idx} onClick={this.changeOrder.bind(this, header)}>{header}</th>)}
+                    {headers.map((header, idx) => <th key={idx}
+                                                      onClick={this.changeOrder.bind(this, header)}>{formatUnderscored(header)}</th>)}
                 </tr>
                 </thead>
                 <tbody>

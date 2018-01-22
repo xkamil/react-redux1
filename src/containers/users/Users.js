@@ -9,16 +9,13 @@ class Users extends Component {
         this.props.fetchUsers();
     }
 
-    getUsersList() {
-        let users = this.props.users.list || {};
-        return Object.getOwnPropertyNames(users).map(id => ({id, ...users[id]}));
-    }
-
     render() {
+        const users = this.props.users.list;
+
         return (
             <div>
                 <h1>List of users</h1>
-                <SmartTable data={this.getUsersList()}/>
+                <SmartTable data={users}/>
                 <hr/>
             </div>
         );
