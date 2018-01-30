@@ -2,8 +2,7 @@ import axios from 'axios'
 import {timestampToDate} from "./utils/formatters";
 
 class Api {
-    //static URL = 'https://oauth2testserver.herokuapp.com';
-    static URL = 'http://10.20.34.134:3001';
+    static URL = 'http://localhost:3000';
 
     static getUsers() {
         return Api._get('/helper/users').then((users) => {
@@ -35,6 +34,40 @@ class Api {
 
     static clearLogs() {
         return Api._get('/helper/clearRequestsLogs');
+    }
+
+    static getRefreshTokens() {
+        return Api._get('/helper/refresh_tokens').then(tokens => {
+            return tokens.map(token => {
+                token.created_at = timestampToDate(token.created_at);
+                return token;
+            })
+        });
+    }
+
+    static getAccessTokens() {
+        return Api._get('/helper/access_tokens').then(tokens => {
+            return tokens.map(token => {
+                token.created_at = timestampToDate(token.created_at);
+                return token;
+            })
+        });
+    }
+
+    static expireAccessTokens() {
+        return Api._get('/helper/expire_all_access_tokens');
+    }
+
+    static expireRefreshTokens() {
+        return Api._get('/helper/expire_all_refresh_tokens');
+    }
+
+    static expireAllTokens() {
+        return Api._get('/helper/expire_all_tokens');
+    }
+
+    static removeAllTokens() {
+        return Api._get('/helper/clear');
     }
 
     static _get(path) {

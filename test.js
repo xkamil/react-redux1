@@ -1,16 +1,19 @@
-let nap = 'responseBodyDupa';
-let output = '';
+launchbox.Container.clearSessionCookies()
+
+    .then(function () {
 
 
+            console.log('ok')
 
-for (let i = 0; i < nap.length; i++) {
-    if(nap.charAt(i).toUpperCase() === nap.charAt(i)){
-        output += ' ' + nap.charAt(i).toLowerCase();
-    }else{
-        output += nap.charAt(i)
-    }
-}
+    })
 
-output = output.charAt(0).toUpperCase() + output.slice(1);
+    .catch(function (error) {
+        console.log("not ok");
+    });
 
-console.log(output);
+
+var authenticator = launchbox.Authentication.authenticator(launchbox.Authentication.Type.PEGA_AUTHENTICATOR);
+authenticator.url = 'http://eng-killerbees04.rpega.com:8080/prweb/';
+authenticator.isLoggedIn().then(function () {
+    console.log('ok')
+})

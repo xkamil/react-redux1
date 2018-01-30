@@ -6,11 +6,13 @@ class TableRow extends Component {
 
     render() {
         const {record} = this.props;
+        const propertyNames = Object.getOwnPropertyNames(record);
+        const maxWidth = window.innerWidth / propertyNames.length * 1.5;
 
         return (
             <tr>
-                {Object.getOwnPropertyNames(record)
-                    .map((item, idx) => <td key={idx}>{transformData(record[item])}</td>)}
+                {propertyNames
+                    .map((item, idx) => <td style={{maxWidth, overflowWrap: 'break-word'}} key={idx}>{transformData(record[item])}</td>)}
             </tr>
         )
     }

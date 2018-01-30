@@ -12,6 +12,11 @@ export const formatCamelCased = (camelCased) => {
     return output.charAt(0).toUpperCase() + output.slice(1);
 };
 
+export const formatUnderscored = (underscored) => {
+    underscored = underscored.replace(/_/, ' ');
+    return underscored.charAt(0).toUpperCase() + underscored.slice(1);
+};
+
 export const timestampToDate = (timestamp) => {
     const date = new Date(timestamp);
 

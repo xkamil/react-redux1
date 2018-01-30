@@ -3,7 +3,8 @@ import React from 'react';
 const style = {
     marginBottom: 10,
     marginTop: 10,
-    float: 'right'
+    float: 'right',
+    display: 'inline-block'
 };
 
 const ButtonBar = (props) => {

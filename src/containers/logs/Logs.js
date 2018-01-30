@@ -54,6 +54,7 @@ class Logs extends Component {
         return (
             <div>
                 <h1>Logs</h1>
+                <hr/>
                 <ButtonBar>
                     <div style={{textAlign: 'center', marginRight: 10}}>
                         <label style={{margin: 9}} htmlFor="auto_refresh">Auto refresh </label>

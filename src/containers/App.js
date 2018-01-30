@@ -17,7 +17,7 @@ class App extends Component {
                     <MainMenu/>
                     <Route exact path="/users" component={Users}/>
                     <Route exact path="/configuration" component={Configuration}/>
-                    <Route exact path="/tokens" component={Tokens}/>
+                    <Route path="/tokens" component={Tokens}/>
                     <Route exact path="/logs" component={Logs}/>
                 </div>
             </Router>

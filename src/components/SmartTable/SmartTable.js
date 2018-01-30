@@ -89,7 +89,8 @@ class SmartTable extends Component {
 }
 
 SmartTable.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    skip: PropTypes.array
 };
 
 export default SmartTable;
