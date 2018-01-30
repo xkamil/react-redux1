@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {fetchUsers} from "../../actions/userActions";
 import {connect} from "react-redux";
-import SmartTable from "../../components/SmartTable";
+import SmartTable from "../../components/SmartTable/SmartTable";
 
 class Users extends Component {
 

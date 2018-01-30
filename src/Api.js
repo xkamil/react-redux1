@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {timestampToDate} from "./utils/formatters";
 
 class Api {
     //static URL = 'https://oauth2testserver.herokuapp.com';
@@ -24,11 +25,16 @@ class Api {
     }
 
     static getLogs() {
-        return Api._get('/helper/logs');
+        return Api._get('/helper/logs').then(logs => {
+            return logs.map(log => {
+                log.created_at = timestampToDate(log.created_at);
+                return log;
+            })
+        });
     }
 
     static clearLogs() {
-        return Api._delete('/helper/logs');
+        return Api._get('/helper/clearRequestsLogs');
     }
 
     static _get(path) {
