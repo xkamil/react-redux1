@@ -37,6 +37,40 @@ class Api {
         return Api._get('/helper/clearRequestsLogs');
     }
 
+    static getRefreshTokens() {
+        return Api._get('/helper/refresh_tokens').then(tokens => {
+            return tokens.map(token => {
+                token.created_at = timestampToDate(token.created_at);
+                return token;
+            })
+        });
+    }
+
+    static getAccessTokens() {
+        return Api._get('/helper/access_tokens').then(tokens => {
+            return tokens.map(token => {
+                token.created_at = timestampToDate(token.created_at);
+                return token;
+            })
+        });
+    }
+
+    static expireAccessTokens() {
+        return Api._get('/helper/expire_all_access_tokens');
+    }
+
+    static expireRefreshTokens() {
+        return Api._get('/helper/expire_all_refresh_tokens');
+    }
+
+    static expireAllTokens() {
+        return Api._get('/helper/expire_all_tokens');
+    }
+
+    static removeAllTokens() {
+        return Api._get('/helper/clear');
+    }
+
     static _get(path) {
         return new Promise((resolve, reject) => {
             axios.get(Api.URL + path).then((response) => {

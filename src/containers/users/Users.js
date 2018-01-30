@@ -15,6 +15,7 @@ class Users extends Component {
         return (
             <div>
                 <h1>List of users</h1>
+                <hr/>
                 <SmartTable data={users}/>
                 <hr/>
             </div>
